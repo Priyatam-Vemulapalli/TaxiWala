@@ -7,21 +7,20 @@ import jakarta.persistence.Id;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@Getter
+@Setter
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class Coupon {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
     String couponCode;
 
     double percentageDiscount;
-
 }

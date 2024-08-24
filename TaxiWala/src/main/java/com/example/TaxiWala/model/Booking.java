@@ -1,36 +1,36 @@
 package com.example.TaxiWala.model;
 
-import com.example.TaxiWala.model.Enum.BookingStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.TaxiWala.Enum.BookingStatus;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@Getter
+@Setter
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class Booking {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-    String bookingId; //UUID
+
+    String bookingId; // UUID
 
     String pickUp;
 
     String destination;
 
     @CreationTimestamp
-    Date bookedAt;
+    Date bookedAt;  // both date and time - Util
 
     @UpdateTimestamp
     Date updatedAt;
@@ -39,5 +39,15 @@ public class Booking {
 
     double totalDistance;
 
-    BookingStatus Status;
+    BookingStatus status;
+
+    @ManyToOne
+    @JoinColumn
+    @JsonIgnore
+    Customer customer;
+
+    @ManyToOne
+    @JoinColumn
+    @JsonIgnore // avoids Jackson infinite recursion
+    Driver driver;
 }

@@ -1,4 +1,4 @@
-package com.example.TaxiWala.model.Enum;
+package com.example.TaxiWala.Enum;
 
 public enum CabType {
     MINI,

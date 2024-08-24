@@ -1,32 +1,41 @@
 package com.example.TaxiWala.model;
 
-import com.example.TaxiWala.model.Enum.Gender;
+import com.example.TaxiWala.Enum.Gender;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-//import java.util.UUID;
-
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@Getter
+@Setter
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-    String name;
-    @Column(unique = true, nullable = false)
-    String emailId; // MySQL column name will be email_id
-    int age;
-    @Enumerated(EnumType.STRING) // JPA will map the enum to vachar in mysql instead of default int in mysql
-    Gender gender; //enum
 
-    Date registeredOn;
+    String name;
+
+    int age;
+
+    @Column(unique = true,nullable = false)
+    String emailId;
+
+    @Enumerated(EnumType.STRING)
+    Gender gender;
+
+    @CreationTimestamp
+    Date registeredOn; // only date - SQL
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    List<Booking> bookings = new ArrayList<>();
 }
