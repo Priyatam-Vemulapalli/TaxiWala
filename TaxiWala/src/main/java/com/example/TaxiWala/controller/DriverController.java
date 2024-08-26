@@ -31,4 +31,9 @@ public class DriverController {
 
         return driverService.getDriverByMobileNumber(mobNo);
     }
+
+    // make same apis as in customers
+
+
+
 }

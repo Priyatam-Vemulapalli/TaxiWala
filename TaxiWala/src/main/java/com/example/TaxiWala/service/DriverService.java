@@ -42,4 +42,12 @@ public class DriverService {
         }
         return DriverTransformer.driverToDriverResponse(driver);
     }
+
+    public DriverResponseBody getDriverByAgeAndMobileNumber(int age, long mobile){
+        Driver driver = driverRepository.findByAgeAndMobNo(age,mobile);
+        if(ObjectUtils.isEmpty(driver)){
+            throw new DriverNotValidException("Invalid mobile number");
+        }
+        return DriverTransformer.driverToDriverResponse(driver);
+    }
 }

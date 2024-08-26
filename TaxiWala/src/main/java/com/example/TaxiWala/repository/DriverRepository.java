@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.Query;
 public interface DriverRepository extends JpaRepository<Driver,Integer> {
 
     Driver findByMobNo(long mobNo);
+    Driver findByAgeAndMobNo(int age, long mobNo);
 }
