@@ -21,6 +21,6 @@ public class CouponController {
     @PostMapping()
     public ResponseEntity addCoupon(@RequestBody CouponRequest couponRequest){
         String response = couponservice.addCoupon(couponRequest);
-        return new ResponseEntity(response, HttpStatus.ACCEPTED);
+        return new ResponseEntity(response, HttpStatus.CREATED);
     }
 }

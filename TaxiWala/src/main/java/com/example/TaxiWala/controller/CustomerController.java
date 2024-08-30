@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -42,7 +41,7 @@ public class CustomerController {
 
     //get all customers of a particular gender
     @GetMapping("/gender/{gender}")
-    public ResponseEntity getByGender(@PathVariable Gender gender){
+    public ResponseEntity getByGender(@PathVariable String gender){
         List<CustomerResponseBody> customerResponseBodyList = customerService.getByGender(gender);
         return new ResponseEntity(customerResponseBodyList,HttpStatus.ACCEPTED);
     }
@@ -66,10 +65,11 @@ public class CustomerController {
     }
 
     // get customers with the highest number of bookings or lowest bookings
-    @GetMapping("booking/{value}")
+    @GetMapping("/booking/{value}")
     public ResponseEntity getHighestBooking(@PathVariable("value") String value){
-        CustomerResponseBody customerResponseBodyList = customerService.getCustomerWithHighestOrLowest(value);
-        return new ResponseEntity(customerResponseBodyList,HttpStatus.ACCEPTED);
+
+        CustomerResponseBody customerResponseBody = customerService.getCustomerWithHighestOrLowest(value);
+        return new ResponseEntity(customerResponseBody,HttpStatus.ACCEPTED);
     }
 
 }

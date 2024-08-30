@@ -11,6 +11,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 @Entity
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Cab {
 
@@ -18,6 +19,7 @@ public class Cab {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
+    @Column(unique = true, nullable = false)
     String cabNo;
 
     String cabModel;

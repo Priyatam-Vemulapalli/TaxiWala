@@ -40,7 +40,7 @@ public class CustomerService {
         return customerResponseBodyList;
     }
 
-    public List<CustomerResponseBody> getByGender(Gender gender) {
+    public List<CustomerResponseBody> getByGender(String gender) {
         List<Customer> customers = customerRepository.getByGender(gender);
         List<CustomerResponseBody> customerResponseBodyList = new ArrayList<>();
         for(Customer customer: customers){
@@ -63,25 +63,26 @@ public class CustomerService {
 
     public CustomerResponseBody getCustomerWithHighestOrLowest(String value) {
 
-        List<Customer> customers;
-        Customer customerwith = new Customer();
-        if(value.equals("Highest")){
-            customers = customerRepository.getCustomerWithHighest();
-        }
-        else{
-            customers = customerRepository.getCustomerWithLowest();
-        }
+        List<Customer> customers = customerRepository.getAllCustomers();
 
-        List<CustomerResponseBody> customerResponseBodyList = new ArrayList<>();
         int maxBookingCount = Integer.MIN_VALUE;
+        int minBookingCount = Integer.MAX_VALUE;
+        Customer customerwithValue = new Customer();
         for(Customer customer: customers){
             List<Booking> bookings = customer.getBookings();
-            if(maxBookingCount<bookings.size()){
-                maxBookingCount = Math.max(bookings.size(),maxBookingCount);
-                customerwith = customer;
+            if(value.equals("Highest")){
+                if(maxBookingCount<bookings.size()) {
+                    maxBookingCount = bookings.size();
+                    customerwithValue = customer;
+                }
             }
-            customerResponseBodyList.add(CustomerTransformer.customerToCustomerResponse(customer));
+            else{
+                if(minBookingCount>bookings.size()) {
+                    minBookingCount = bookings.size();
+                    customerwithValue = customer;
+                }
+            }
         }
-        return CustomerTransformer.customerToCustomerResponse(customerwith);
+        return CustomerTransformer.customerToCustomerResponse(customerwithValue);
     }
 }
