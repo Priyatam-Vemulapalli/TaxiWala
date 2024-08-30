@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/v1/driver")
@@ -18,7 +20,8 @@ public class DriverController {
 
     @PostMapping
     public ResponseEntity addDriver(@RequestBody DriverRequestBody driver) {
-        return new ResponseEntity(driverService.addDriver(driver), HttpStatus.CREATED);
+        DriverResponseBody driverResponseBody = driverService.addDriver(driver);
+        return new ResponseEntity(driverResponseBody, HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -31,4 +34,12 @@ public class DriverController {
 
         return driverService.getDriverByMobileNumber(mobNo);
     }
+
+    // make same apis as in customers
+    @GetMapping("/age-and-name")
+    public List<DriverResponseBody> getDriversByAgeAndName(@RequestParam("age") int age,
+                                                           @RequestParam("name") String name){
+        return driverService.getByAgeAndName(age,name);
+    }
+
 }

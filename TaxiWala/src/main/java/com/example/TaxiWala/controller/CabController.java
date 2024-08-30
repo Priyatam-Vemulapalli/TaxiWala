@@ -1,5 +1,6 @@
 package com.example.TaxiWala.controller;
 
+import com.example.TaxiWala.dto.request.CabRequestBody;
 import com.example.TaxiWala.model.Cab;
 import com.example.TaxiWala.service.CabService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ public class CabController {
     @Autowired
     CabService cabService;
 
-    @PostMapping("/add")
-    public String addCab(@RequestBody Cab cab){
+    @PostMapping()
+    public String addCab(@RequestBody CabRequestBody cab){
         return cabService.addCab(cab);
     }
 
